@@ -7,7 +7,7 @@
 [node name="main" type="Node2D"]
 
 [node name="glyphs" type="Node2D" parent="."]
-position = Vector2( 26, 91 )
+position = Vector2( 31, 68 )
 scale = Vector2( 0.8, 0.8 )
 
 [node name="V" parent="glyphs" instance=ExtResource( 1 )]
@@ -124,6 +124,7 @@ default_color = Color( 0.752941, 0.713726, 0.713726, 1 )
 antialiased = true
 
 [node name="detector" type="Node2D" parent="."]
+visible = false
 position = Vector2( 187, 211 )
 script = ExtResource( 3 )
 glyphs = NodePath("../glyphs")

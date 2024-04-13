@@ -55,12 +55,20 @@ func select_glyph(user_points):
 	for glyph_type in glyph_points.keys():
 		var target_points = glyph_points[glyph_type]
 		var target_node = glyph_nodes[glyph_type]
-		glyph_type_to_similarity[glyph_type] = are_points_similar(target_points, user_points.duplicate(), 16, glyph_type, target_node.missable_points)
-	var highest_similarity = 0.35
+		glyph_type_to_similarity[glyph_type] = are_points_similar(target_points, user_points.duplicate(), 14, glyph_type, target_node.missable_points)
+	var similarity_cutoff = 0.35
+	var highest_similarity = similarity_cutoff
+	var max_candidates = 2
+	var candidates_count = 0
+	print(glyph_type_to_similarity)
 	for glyph_type in glyph_type_to_similarity.keys():
-		if glyph_type_to_similarity[glyph_type] > highest_similarity:
-			selected_glyph_type = glyph_type
-	if selected_glyph_type != null:
+		if glyph_type_to_similarity[glyph_type] > similarity_cutoff:
+			candidates_count += 1
+			if glyph_type_to_similarity[glyph_type] > highest_similarity:
+				selected_glyph_type = glyph_type
+	if candidates_count >= max_candidates:
+		print("too many candidates, ignoring")
+	elif selected_glyph_type != null:
 		selected_glyph_node = glyph_nodes[selected_glyph_type]
 		selected_glyph_node.modulate = Color(0, 1, 0)
 
@@ -85,20 +93,21 @@ func receive_points(points):
 	rect_points.append_array([Vector2(min_x, min_y), Vector2(min_x, max_y), Vector2(max_x, max_y), Vector2(max_x, min_y), Vector2(min_x, min_y)])
 	var width = abs(min_x - max_x)
 	var height = abs(min_y - max_y)
+	
 	if width == 0 or height == 0:
 		push_warning("invalid shape, width or height = 0")
 		return []
 	var aspect_ratio_x = SIZE / width
 	var aspect_ratio_y = SIZE / height
 	var aspect_ratio = min(aspect_ratio_x, aspect_ratio_y)
-	var scale_x = SIZE / abs(max_x - min_x)
-	var scale_y = SIZE / abs(max_y - min_y)
+
 	for point in points:
 		var scaled_x = (point.x - min_x - width / 2.0) * aspect_ratio
 		var scaled_y = (point.y - min_y - height / 2.0) * aspect_ratio
 		scaled_points.append(Vector2(scaled_x, scaled_y))
 	select_glyph(scaled_points)
 	update()
+	
 	return rect_points
 
 func _draw():
