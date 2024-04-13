@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://detector.gd"
 }, {
+"base": "Node2D",
+"class": "Enemies",
+"language": "GDScript",
+"path": "res://enemies.gd"
+}, {
 "base": "Line2D",
 "class": "Glyph",
 "language": "GDScript",
@@ -21,6 +26,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Detection": "",
+"Enemies": "",
 "Glyph": ""
 }
 
@@ -29,6 +35,10 @@ _global_script_class_icons={
 config/name="ld55_gd3"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Globals="*res://globals.gd"
 
 [display]
 

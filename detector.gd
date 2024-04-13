@@ -2,6 +2,8 @@ extends Node2D
 class_name Detection
 
 export(NodePath) var glyphs
+export(NodePath) var pentagram
+
 const SIZE = 64.0
 var scaled_points = []
 var rect_points = []
@@ -13,6 +15,7 @@ var selected_glyph_node
 var selected_glyph_type
 
 func _ready():
+	pentagram = get_node(pentagram)
 	for line in get_node(glyphs).get_children():	
 		if typeof(line) == typeof(Line2D):			
 			glyph_points[line.symbol] = line.points
@@ -48,9 +51,9 @@ func are_points_similar(points_a, points_b, threshold, glyph_type, missable_poin
 
 func select_glyph(user_points):
 	point_to_glyphs.clear()
-	if selected_glyph_node != null:
-		selected_glyph_node.modulate = Color(1, 1, 1)
-		selected_glyph_type = null
+	#if selected_glyph_node != null:
+	#	selected_glyph_node.modulate = Color(1, 1, 1)
+	#	selected_glyph_type = null
 	var glyph_type_to_similarity = {}
 	for glyph_type in glyph_points.keys():
 		var target_points = glyph_points[glyph_type]
@@ -71,8 +74,12 @@ func select_glyph(user_points):
 	elif selected_glyph_type != null:
 		selected_glyph_node = glyph_nodes[selected_glyph_type]
 		selected_glyph_node.modulate = Color(0, 1, 0)
+		pentagram.push_glyph(selected_glyph_type, selected_glyph_node) 
 
 func receive_points(points):
+	if selected_glyph_node != null:
+		selected_glyph_node.modulate = Color(1, 1, 1)
+		selected_glyph_type = null
 	if points.size() < 2:
 		return []
 	scaled_points.clear()

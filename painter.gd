@@ -36,8 +36,8 @@ func _process(delta):
 func _draw():
 	if points.size() > 1:
 		draw_polyline(points, Color(0.5, 0, 0), 8)
-	if rect_points.size() > 2:
-		draw_polyline(rect_points, Color(0.5, 0, 0.5), 2)
+	#if rect_points.size() > 2:
+	#	draw_polyline(rect_points, Color(0.5, 0, 0.5), 2)
 	draw_polyline([Vector2(-BOUNDING_SIZE, -BOUNDING_SIZE), Vector2(-BOUNDING_SIZE, BOUNDING_SIZE), Vector2(BOUNDING_SIZE, BOUNDING_SIZE), Vector2(BOUNDING_SIZE, -BOUNDING_SIZE), Vector2(-BOUNDING_SIZE, -BOUNDING_SIZE)], Color(0.9, 0.9, 0.9), 2)
 	
 	draw_circle(Vector2.ZERO, 2, Color(1, 0.8, 0))

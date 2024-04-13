@@ -1,12 +1,11 @@
-extends Line2D
-class_name Glyph
+extends Node2D
 
-export var symbol = ""
-export var missable_points = 1
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var symbol_width = 84
+
+var enemies:Enemies
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

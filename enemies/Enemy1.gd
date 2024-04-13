@@ -1,18 +1,18 @@
-extends Line2D
-class_name Glyph
+extends Node2D
 
-export var symbol = ""
-export var missable_points = 1
+
 # Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-export var symbol_width = 84
+var speed = 50
+var move_direction = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
+func is_enemy():
+	return true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	self.position += move_direction * delta * speed
+	#self.look_at(get_global_mouse_position())

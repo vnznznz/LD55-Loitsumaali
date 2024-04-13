@@ -1,12 +1,41 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://glyph.tscn" type="PackedScene" id=1]
 [ext_resource path="res://painter.gd" type="Script" id=2]
 [ext_resource path="res://detector.gd" type="Script" id=3]
+[ext_resource path="res://main.gd" type="Script" id=4]
+[ext_resource path="res://enemies/Enemy1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/health_bg.png" type="Texture" id=6]
+[ext_resource path="res://assets/health_fg.png" type="Texture" id=7]
+[ext_resource path="res://enemies.gd" type="Script" id=8]
+[ext_resource path="res://pentagram.gd" type="Script" id=9]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -91, 74, 0, 0, 0, 0, -12, -46, 0, 0, 0, 0, 92, -55, 0, 0, 0, 0, 339, -55, 0, 0, 0, 0, 440, -26, 0, 0, 0, 0, 516, 88 )
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 98, 96 )
 
 [node name="main" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="enemies" type="Node2D" parent="."]
+script = ExtResource( 8 )
+enemy_1 = ExtResource( 5 )
+target = NodePath("../pentagram")
+health = NodePath("../UI/Health")
+
+[node name="spawn" type="Path2D" parent="enemies"]
+curve = SubResource( 1 )
+
+[node name="Enemy1Timer" type="Timer" parent="enemies"]
+wait_time = 2.0
+autostart = true
 
 [node name="glyphs" type="Node2D" parent="."]
+visible = false
 position = Vector2( 31, 68 )
 scale = Vector2( 0.8, 0.8 )
 
@@ -16,13 +45,14 @@ default_color = Color( 1, 1, 1, 1 )
 antialiased = true
 symbol = "|"
 missable_points = 0
+symbol_width = 20
 
 [node name="H" parent="glyphs" instance=ExtResource( 1 )]
 position = Vector2( 64, 0 )
 points = PoolVector2Array( 32, 0, 19.25, 0, 0, 0, -16, 0, -32, 0 )
 default_color = Color( 1, 1, 1, 1 )
 antialiased = true
-symbol = "─"
+symbol = "-"
 missable_points = 0
 
 [node name="R" parent="glyphs" instance=ExtResource( 1 )]
@@ -46,28 +76,19 @@ position = Vector2( 280, 0 )
 points = PoolVector2Array( -32, 32, -25, 18, -16, 0, -9.425, -13.15, 0, -32, 9.55, -12.9, 16, 0, 23, 14, 29.1, 26.2, 32, 32 )
 default_color = Color( 1, 1, 1, 1 )
 antialiased = true
-symbol = "⋀"
+symbol = "^"
 
 [node name="D" parent="glyphs" instance=ExtResource( 1 )]
 position = Vector2( 360, 0 )
 points = PoolVector2Array( -32, -32, -27, -22, -16, 0, -10, 12, 0, 32, 8, 16, 16, 0, 26, -20, 32, -32 )
 default_color = Color( 1, 1, 1, 1 )
 antialiased = true
-symbol = "⋁"
+symbol = "V"
 
 [node name="pentagram" type="Node2D" parent="."]
-position = Vector2( 182, 474 )
-
-[node name="painter" type="Node2D" parent="pentagram"]
-script = ExtResource( 2 )
-detection = NodePath("../../detector")
-
-[node name="Line2D" type="Line2D" parent="pentagram"]
-visible = false
-points = PoolVector2Array( 143, 519, 195, 367, 248, 517, 106, 416, 278, 417, 143, 519 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
+position = Vector2( 195, 440 )
+script = ExtResource( 9 )
+invocation = NodePath("../UI/Invocation")
 
 [node name="guide" type="Line2D" parent="pentagram"]
 points = PoolVector2Array( -100, 100, 100, 100, 100, -100, -100, -100, -100, 100 )
@@ -123,8 +144,48 @@ width = 1.0
 default_color = Color( 0.752941, 0.713726, 0.713726, 1 )
 antialiased = true
 
+[node name="painter" type="Node2D" parent="pentagram"]
+script = ExtResource( 2 )
+detection = NodePath("../../detector")
+
+[node name="Line2D" type="Line2D" parent="pentagram"]
+visible = false
+points = PoolVector2Array( 143, 519, 195, 367, 248, 517, 106, 416, 278, 417, 143, 519 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="hit_area" type="Area2D" parent="pentagram"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pentagram/hit_area"]
+position = Vector2( 0, -1.5 )
+shape = SubResource( 2 )
+
 [node name="detector" type="Node2D" parent="."]
 visible = false
 position = Vector2( 187, 211 )
 script = ExtResource( 3 )
 glyphs = NodePath("../glyphs")
+pentagram = NodePath("../pentagram")
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="Health" type="TextureProgress" parent="UI"]
+margin_left = 14.0
+margin_top = 338.0
+margin_right = 78.0
+margin_bottom = 538.0
+value = 100.0
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 6 )
+fill_mode = 3
+nine_patch_stretch = true
+
+[node name="Invocation" type="Label" parent="UI"]
+margin_left = 23.0
+margin_top = 56.0
+margin_right = 352.0
+margin_bottom = 111.0
+
+[connection signal="timeout" from="enemies/Enemy1Timer" to="enemies" method="_on_Enemy1Timer_timeout"]
+[connection signal="area_shape_entered" from="pentagram/hit_area" to="enemies" method="_on_hit_area_area_shape_entered"]
