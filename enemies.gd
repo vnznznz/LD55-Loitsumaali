@@ -31,24 +31,24 @@ var attacks = [
 		},
 		{
 			"total": 10,
-			"shield": 0.5,
-			"deploy": 1.5,
+			"shield": 0.7,
+			"deploy": 2,
 			"prepare": 3,
 		},
 		{
-			"total": 15,
+			"total": 14,
 			"shield": 0.3,
 			"deploy": 0.2,
 		},		
 		{
-			"total": 40,
+			"total": 30,
 			"shield": 0.7,
 			"deploy": 10,
+			"prepare": 4,
 		}
 		
 	]
 ]
-
 
 
 const STATE_DEPLOYING = "deploying"
@@ -68,7 +68,8 @@ func _ready():
 	Globals.enemies = self
 	
 	setup_wave()
-
+	
+	
 func spawn():
 	var enemy:Node2D = enemy_1.instance()	
 	
@@ -107,7 +108,12 @@ func _process(delta):
 	if current_state == STATE_WAITING:
 		if len(enemies) == 0:
 			wave_idx += 1
-			wave_idx %= len(attacks[attack_idx])
+			if wave_idx >= len(attacks[attack_idx]):
+				attack_idx += 1
+				wave_idx = 0
+			if attack_idx >= len(attacks):
+				Globals.game.set_victory()
+				return
 			current_state = STATE_PREPARING
 			prepare_time_left = attacks[attack_idx][wave_idx].get("prepare", 0)
 	elif current_state == STATE_PREPARING:
