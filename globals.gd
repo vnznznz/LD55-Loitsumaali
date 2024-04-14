@@ -7,7 +7,7 @@ extends Node2D
 
 var enemies:Enemies
 
-var GlyphVis:GlyphVis
+var GlyphVis
 
 var is_casting:bool = false
 

@@ -35,8 +35,9 @@ func _process(delta):
 
 func _on_Area2D_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	var parent = area.get_parent()
-	if parent.has_method("is_enemy") and parent.is_enemy():	
-		Globals.enemies.remove_enemy(parent)
+	if parent.has_method("is_enemy") and parent.is_enemy():
+		parent.take_damage()
+		
 		queue_free()
 
 
