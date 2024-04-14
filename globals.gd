@@ -12,6 +12,7 @@ var GlyphVis
 var is_casting:bool = false
 
 var game
+var pentegram:Node2D
 
 var banished_enemies = 0
 

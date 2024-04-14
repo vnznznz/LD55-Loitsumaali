@@ -26,7 +26,7 @@ var current_spell = ""
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	invocation_bar = get_node(invocation)
-
+	Globals.pentegram = self
 
 	
 func push_glyph(glyph, source_node:Node2D):

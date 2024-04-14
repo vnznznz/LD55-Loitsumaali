@@ -159,8 +159,12 @@ func _process(delta):
 	
 		
 
-func remove_enemy(enemy):
-	Globals.banished_enemies += 1
+func remove_enemy(enemy, no_score=false):
+	if no_score == true:
+		pass
+	else:
+		Globals.banished_enemies += 1
+		
 	if is_instance_valid(enemy):
 		enemies.erase(enemy)
 		enemy.queue_free()
