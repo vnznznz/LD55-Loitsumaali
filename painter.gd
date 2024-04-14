@@ -10,6 +10,9 @@ func _ready():
 
 
 func _process(delta):
+	if Globals.is_casting:
+		return
+		
 	if Input.is_action_just_pressed("paint"):
 		points.clear()
 		rect_points.clear()

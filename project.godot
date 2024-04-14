@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Glyph",
 "language": "GDScript",
 "path": "res://glyph.gd"
+}, {
+"base": "Node2D",
+"class": "GlyphVis",
+"language": "GDScript",
+"path": "res://GlyphVis.gd"
 } ]
 _global_script_class_icons={
 "Detection": "",
 "Enemies": "",
-"Glyph": ""
+"Glyph": "",
+"GlyphVis": ""
 }
 
 [application]

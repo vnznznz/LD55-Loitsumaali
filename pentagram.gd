@@ -21,7 +21,7 @@ var spells = {
 
 var current_glyphs = []
 
-var is_casting = false;
+
 var current_spell = ""
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,7 +32,9 @@ func _ready():
 func push_glyph(glyph, source_node:Node2D):
 	if current_glyphs.size() == 0:
 		invocation_bar.text = ""
-		
+		# Globals.GlyphVis.clear()
+	
+	Globals.GlyphVis.add_glyph(glyph, global_position)
 	current_glyphs.append(glyph)	
 	
 	var invocation =  "".join(current_glyphs)
@@ -46,10 +48,12 @@ func push_glyph(glyph, source_node:Node2D):
 			
 			if spell == invocation:
 				start_casting(spell)
+				Globals.GlyphVis.present_sucess()
 				return
 	
 	print("candidates:", candidates)
 	if candidates.size() == 0:
+		Globals.GlyphVis.present_fail()
 		invocation_bar.text += " ?"
 		current_glyphs.clear()
 
@@ -57,12 +61,12 @@ func start_casting(spell):
 	print("start casting:", spell)
 	invocation_bar.text = "casting: " + invocation_bar.text
 	current_spell = spell
-	is_casting = true
+	Globals.is_casting = true
 	cast_particles_direction.restart()
 	$CastChargeTimer.start()
 	
 func cast_spell(spell):
-	is_casting = false 
+	Globals.is_casting = false 
 	
 	current_glyphs.clear()
 	
@@ -75,14 +79,14 @@ func cast_spell(spell):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if is_casting:
+	if Globals.is_casting:
 		update()
 
 func _draw():
-	if is_casting:
+	if Globals.is_casting:
 		draw_line(Vector2.ZERO, Vector2(get_local_mouse_position().x, -50).normalized() * 200, Color.whitesmoke, 2, true)
 
 
 func _on_CastChargeTimer_timeout():
-	if is_casting:
+	if Globals.is_casting:
 		cast_spell(current_spell)

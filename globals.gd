@@ -7,6 +7,10 @@ extends Node2D
 
 var enemies:Enemies
 
+var GlyphVis:GlyphVis
+
+var is_casting:bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
