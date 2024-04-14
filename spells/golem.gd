@@ -15,7 +15,7 @@ var color = Color.brown
 var health = 3
 
 var shoot_timer = 0
-var shoot_timeout = 1.5
+var shoot_timeout = 1.25
 
 var bullet = preload("res://projectiles/boulder.tscn")
 
@@ -24,7 +24,7 @@ var bullet = preload("res://projectiles/boulder.tscn")
 func _ready():
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "speed", 0, 4.5)
-	tween.tween_callback(self, "queue_free").set_delay(60)
+	tween.tween_callback(self, "queue_free").set_delay(120)
 	rotation = direction.angle()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

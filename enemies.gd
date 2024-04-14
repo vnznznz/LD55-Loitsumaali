@@ -21,10 +21,10 @@ var difficulty_modifier = 0
 var attacks = [	
 	[
 		{
-			"total": 5,
+			"total": 10,
 			"shield": 0,			
 			"speed_shield": 0,
-			"deploy": 0.5,			
+			"deploy": 2.5,			
 		},
 		{
 			"total": 10,

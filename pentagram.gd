@@ -16,7 +16,7 @@ var spells = {
 	"^^": preload("res://spells/push.tscn"),
 	"V|V": preload("res://spells/fire.tscn"),
 	"^>VVV": preload("res://spells/hellbomb.tscn"),
-	">^|V<": preload("res://spells/golem.tscn")
+	">^^<": preload("res://spells/golem.tscn")
 	
 }
 
