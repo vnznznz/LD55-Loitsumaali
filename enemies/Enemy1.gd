@@ -30,9 +30,10 @@ func push(delta):
 		
 	if shield.visible:
 		remove_shield()
-		global_position += Vector2.UP * 50 * delta
+		global_position += Vector2.UP * 75 * delta
 	else:
-		global_position += Vector2.UP * 50 * delta
+		global_position += Vector2.UP * 100 * delta
+		
 	look_at(Globals.pentegram.global_position)
 	move_direction = (Globals.pentegram.global_position - self.global_position).normalized()
 	
