@@ -7,17 +7,24 @@ extends Node2D
 var projectile = preload("res://projectiles/zap_projectile.tscn")
 var shot_count = 4
 var current_shots = 0
+var direction = Vector2.ZERO
+var speed = 75
 
 func _ready():
-	shoot()
+	pass
+	
+	
 
 func _process(delta):
-	pass
+	self.position += direction * delta * speed
 		
 
 func shoot():
 	current_shots += 1
-	get_parent().add_child(projectile.instance())
+	var proj = projectile.instance()
+	
+	get_parent().add_child(proj)
+	proj.global_position = global_position
 
 func _on_Timer_timeout():
 	shoot()

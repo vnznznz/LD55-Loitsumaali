@@ -2,7 +2,8 @@ extends Node2D
 
 
 var direction = Vector2.ZERO
-var speed = 100
+var speed = 150
+var target_node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,14 +16,20 @@ func _ready():
 		if distance < selected_distance:
 			selected_enemy = enemy
 			selected_distance = distance
+			target_node = selected_enemy	
 			
-	if selected_enemy:
+	if target_node:		
 		look_at(selected_enemy.global_position)
 		direction = (selected_enemy.global_position - global_position).normalized()
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if is_instance_valid(target_node):		
+		look_at(target_node.global_position)
+		direction = (target_node.global_position - global_position).normalized()
+		
 	self.position += direction * speed * delta
 
 
