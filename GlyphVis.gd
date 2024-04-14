@@ -17,8 +17,9 @@ var glyph_textures = {
 
 
 var current_offset_x = 0 
+var current_offset_y = 0 
 
-onready var viz_pos = $VisPos.global_position
+onready var viz_pos = $VisPos.position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,6 +33,7 @@ func _ready():
 
 func present_fail():
 	current_offset_x = 0 
+	current_offset_y = 0 
 	for child in get_children():
 		var scale_factor = 0.6
 		var tween = get_tree().create_tween()
@@ -42,6 +44,7 @@ func present_fail():
 		
 func present_sucess():	
 	current_offset_x = 0 
+	current_offset_y = 0 
 	for child in get_children():
 		var scale_factor = 0.6
 		var tween = get_tree().create_tween()
@@ -56,14 +59,15 @@ func clear():
 
 func add_glyph(glyph, start_pos:Vector2):
 	var scale_factor = 0.3
-	var target_pos = Vector2(global_position.x + current_offset_x, global_position.y)
+	var target_pos = Vector2(0,  current_offset_y)
 	var tex:Texture = glyph_textures[glyph]
 	current_offset_x += tex.get_width() * scale_factor
+	current_offset_y += (tex.get_height() * scale_factor) + 10
 	var sprite = Sprite.new()
 	sprite.texture = tex
-	sprite.modulate = Color.darkred
-	sprite.global_position = viz_pos
+	sprite.modulate = Color.darkred	
 	sprite.offset = Vector2(-tex.get_width() / 2.0, -tex.get_height() / 2.0)
+	sprite.position = viz_pos
 	#sprite.centered = true
 
 	add_child(sprite)
@@ -76,8 +80,10 @@ func add_glyph(glyph, start_pos:Vector2):
 	
 	sprite2.texture = tex
 	sprite2.modulate = Color.darkred
-	sprite2.global_position = target_pos
 	sprite2.scale = Vector2(scale_factor, scale_factor)
+	sprite2.position = target_pos
+	
+	
 	add_child(sprite2)
 	
 	

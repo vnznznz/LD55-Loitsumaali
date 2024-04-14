@@ -100,6 +100,7 @@ points = PoolVector2Array( -32, -32, -27, -22, -16, 0, -10, 12, 0, 32, 8, 16, 16
 default_color = Color( 1, 1, 1, 1 )
 antialiased = true
 symbol = "V"
+missable_points = 2
 
 [node name="pentagram" type="Node2D" parent="."]
 position = Vector2( 195, 440 )
@@ -244,11 +245,11 @@ margin_bottom = 111.0
 custom_fonts/font = SubResource( 6 )
 
 [node name="GlyphVis" type="Node2D" parent="UI"]
-position = Vector2( 30, 40 )
+position = Vector2( 331, 349 )
 script = ExtResource( 11 )
 
 [node name="VisPos" type="Position2D" parent="UI/GlyphVis"]
-position = Vector2( 199, 242 )
+position = Vector2( -105, -211 )
 
 [connection signal="timeout" from="enemies/Enemy1Timer" to="enemies" method="_on_Enemy1Timer_timeout"]
 [connection signal="area_shape_entered" from="pentagram/hit_area" to="enemies" method="_on_hit_area_area_shape_entered"]
