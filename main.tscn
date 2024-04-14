@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://glyph.tscn" type="PackedScene" id=1]
 [ext_resource path="res://painter.gd" type="Script" id=2]
@@ -12,6 +12,9 @@
 [ext_resource path="res://assets/spell_spark.png" type="Texture" id=10]
 [ext_resource path="res://GlyphVis.gd" type="Script" id=11]
 [ext_resource path="res://EnemyStatus.gd" type="Script" id=12]
+[ext_resource path="res://assets/spellbook_icon.png" type="Texture" id=13]
+[ext_resource path="res://assets/spellbook_icon_hover.png" type="Texture" id=14]
+[ext_resource path="res://spellbook_btn.gd" type="Script" id=15]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -260,6 +263,17 @@ script = ExtResource( 12 )
 margin_right = 40.0
 margin_bottom = 14.0
 
+[node name="spellbook_btn" type="TextureButton" parent="UI"]
+margin_left = 309.0
+margin_top = -1.0
+margin_right = 437.0
+margin_bottom = 127.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture_normal = ExtResource( 13 )
+texture_hover = ExtResource( 14 )
+script = ExtResource( 15 )
+
 [connection signal="timeout" from="enemies/Enemy1Timer" to="enemies" method="_on_Enemy1Timer_timeout"]
 [connection signal="area_shape_entered" from="pentagram/hit_area" to="enemies" method="_on_hit_area_area_shape_entered"]
 [connection signal="timeout" from="pentagram/CastChargeTimer" to="pentagram" method="_on_CastChargeTimer_timeout"]
+[connection signal="pressed" from="UI/spellbook_btn" to="UI/spellbook_btn" method="_on_spellbook_btn_pressed"]

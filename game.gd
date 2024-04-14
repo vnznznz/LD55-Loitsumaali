@@ -21,6 +21,7 @@ onready var victory = $menu/Victory
 onready var defeat = $menu/Defeat
 onready var banished = $menu/banished
 onready var start = $menu/Start
+onready var book = $menu/Spellbook
 
 var main_scene = preload("res://main.tscn")
 
@@ -37,6 +38,11 @@ func _ready():
 
 func set_start():
 	state = STATE_START
+	
+	for child in menu.get_children():
+		child.visible = false
+	
+	menu.visible = true
 	start.visible = true
 	get_tree().paused = true
 	
@@ -50,6 +56,11 @@ func set_playing():
 	menu.visible = false
 	start.visible = false
 	
+	get_tree().paused = false
+
+func continue_playing():
+	state = STATE_PLAYING
+	menu.visible = false	
 	get_tree().paused = false
 	
 func set_victory():
@@ -73,11 +84,26 @@ func set_defeat():
 	banished.visible = true
 	banished.text = "Enemies banished: %s" %[Globals.banished_enemies]
 	defeat.visible = true
+
+func set_book():
+	state = STATE_BOOK
+	get_tree().paused = true
+	for child in menu.get_children():
+		child.visible = false
 	
+	menu.visible = true
+	book.visible = true
 
 func _input(event:InputEvent):
-	if event.is_action("interact"):
+	if event.is_action_released("interact"):
+		if state == STATE_START:
+			set_book()
+			return
+		
 		if state != STATE_PLAYING:
-			set_playing()
+			if state == STATE_BOOK:
+				continue_playing()
+			else:
+				set_playing()
 	
 	

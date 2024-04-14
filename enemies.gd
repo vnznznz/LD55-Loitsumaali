@@ -36,7 +36,7 @@ var attacks = [
 			"prepare": 3,
 		},
 		{
-			"total": 14,
+			"total": 15,
 			"shield": 0.3,
 			"deploy": 0.2,
 		},		
@@ -46,7 +46,43 @@ var attacks = [
 			"deploy": 10,
 			"prepare": 4,
 		}
-		
+	],
+	[
+		{
+			"total": 20,
+			"shield": 0,
+			"deploy": 10,			
+		},
+		{
+			"total": 20,
+			"shield": 0.5,
+			"deploy": 5,
+			"prepare": 2,
+		},
+		{
+			"total": 10,
+			"shield": 1,
+			"deploy": 0.1,
+			"prepare": 0,
+		},
+		{
+			"total": 15,
+			"shield": 1,
+			"deploy": 0.1,
+			"prepare": 0,
+		},
+		{
+			"total": 20,
+			"shield": 1,
+			"deploy": 0.1,
+			"prepare": 0.5,
+		},
+		{
+			"total": 100,
+			"shield": 0.3,
+			"deploy": 10,
+			"prepare": 4
+		},
 	]
 ]
 
