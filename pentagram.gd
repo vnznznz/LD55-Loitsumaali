@@ -14,7 +14,7 @@ var invocation_bar:Label
 var spells = {
 	"|--": preload("res://spells/zap.tscn"),
 	"^^": preload("res://spells/push.tscn"),
-	"^^-": preload("res://spells/zap.tscn"),
+	"V|V": preload("res://spells/fire.tscn"),
 	"^v^": preload("res://spells/zap.tscn")
 	
 }
