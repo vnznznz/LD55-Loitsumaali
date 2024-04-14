@@ -92,6 +92,7 @@ points = PoolVector2Array( -32, 32, -25, 18, -16, 0, -9.425, -13.15, 0, -32, 9.5
 default_color = Color( 1, 1, 1, 1 )
 antialiased = true
 symbol = "^"
+missable_points = 2
 
 [node name="D" parent="glyphs" instance=ExtResource( 1 )]
 position = Vector2( 360, 0 )

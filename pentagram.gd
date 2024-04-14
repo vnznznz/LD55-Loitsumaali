@@ -13,7 +13,7 @@ var invocation_bar:Label
 
 var spells = {
 	"|--": preload("res://spells/zap.tscn"),
-	"^v-": preload("res://spells/zap.tscn"),
+	"^^": preload("res://spells/push.tscn"),
 	"^^-": preload("res://spells/zap.tscn"),
 	"^v^": preload("res://spells/zap.tscn")
 	
@@ -80,8 +80,8 @@ func cast_spell(spell):
 	print("casting:", spell)
 	cast_particles.modulate = spell_instance.color
 	cast_particles.restart()
-	
-	spell_instance.direction =  Vector2(get_local_mouse_position().x, -50).normalized()
+	if spell_instance.do_charge:
+		spell_instance.direction =  Vector2(get_local_mouse_position().x, -50).normalized()
 	add_child(spell_instance)
 	update()
 

@@ -15,7 +15,7 @@ var charge_time = 1
 var color = Color.aqua
 
 func _ready():
-	pass
+	shoot()
 	
 	
 
