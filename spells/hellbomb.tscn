@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/fire.png" type="Texture" id=1]
+[ext_resource path="res://assets/flame_bg.png" type="Texture" id=2]
+[ext_resource path="res://spells/hellbomb.gd" type="Script" id=3]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0.880682 ), 0.0, 1.72417, 0, 0, Vector2( 1, 0.571591 ), -0.479331, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.666667 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 200.0
+
+[node name="hellbomb" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="FlameBg" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 128
+one_shot = true
+explosiveness = 0.75
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_align_y = true
+direction = Vector2( 0, -1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 200.0
+scale_amount = 0.2
+scale_amount_random = 0.4
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 1, -1 )
+shape = SubResource( 3 )
