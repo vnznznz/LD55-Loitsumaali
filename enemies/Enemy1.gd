@@ -2,7 +2,7 @@ extends Node2D
 
 
 # Declare member variables here. Examples:
-var speed = 20
+var speed = 15
 var move_direction = Vector2.ZERO
 var shield_visible = false
 

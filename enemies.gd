@@ -118,6 +118,7 @@ func _process(delta):
 		
 
 func remove_enemy(enemy):
+	Globals.banished_enemies += 1
 	if is_instance_valid(enemy):
 		enemies.erase(enemy)
 		enemy.queue_free()
@@ -125,8 +126,10 @@ func remove_enemy(enemy):
 func _on_hit_area_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	var parent = area.get_parent()
 	if parent.has_method("is_enemy") and parent.is_enemy():
-		health_bar.value -= 20
+		health_bar.value -= 10
 		remove_enemy(parent)
+		if health_bar.value <= 0:
+			Globals.game.set_defeat()
 
 func _on_Enemy1Timer_timeout():
 	deploy_enemy()
