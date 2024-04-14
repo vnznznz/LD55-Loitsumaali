@@ -44,7 +44,7 @@ func remove_shield():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if speed_shield.visible:
-		self.position += move_direction * delta * speed * 2
+		self.position += move_direction * delta * speed * 1.5
 	else:
 		self.position += move_direction * delta * speed
 	
