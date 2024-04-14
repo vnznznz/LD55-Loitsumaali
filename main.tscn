@@ -259,7 +259,6 @@ script = ExtResource( 12 )
 [node name="AttackLabel" type="Label" parent="UI/EnemyStatus"]
 margin_right = 40.0
 margin_bottom = 14.0
-text = "Wave:"
 
 [connection signal="timeout" from="enemies/Enemy1Timer" to="enemies" method="_on_Enemy1Timer_timeout"]
 [connection signal="area_shape_entered" from="pentagram/hit_area" to="enemies" method="_on_hit_area_area_shape_entered"]

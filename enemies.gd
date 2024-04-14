@@ -41,9 +41,9 @@ var attacks = [
 			"deploy": 0.2,
 		},		
 		{
-			"total": 30,
-			"shield": 0.8,
-			"deploy": 5,
+			"total": 40,
+			"shield": 0.7,
+			"deploy": 10,
 		}
 		
 	]
