@@ -16,6 +16,7 @@ texture = ExtResource( 3 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2( 1, 23 )
+amount = 10
 lifetime = 0.8
 texture = ExtResource( 2 )
 emission_shape = 1

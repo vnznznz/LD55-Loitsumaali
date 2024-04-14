@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://glyph.tscn" type="PackedScene" id=1]
 [ext_resource path="res://painter.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://pentagram.gd" type="Script" id=9]
 [ext_resource path="res://assets/spell_spark.png" type="Texture" id=10]
 [ext_resource path="res://GlyphVis.gd" type="Script" id=11]
+[ext_resource path="res://EnemyStatus.gd" type="Script" id=12]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -47,7 +48,6 @@ curve = SubResource( 1 )
 
 [node name="Enemy1Timer" type="Timer" parent="enemies"]
 wait_time = 2.0
-autostart = true
 
 [node name="glyphs" type="Node2D" parent="."]
 visible = false
@@ -250,6 +250,16 @@ script = ExtResource( 11 )
 
 [node name="VisPos" type="Position2D" parent="UI/GlyphVis"]
 position = Vector2( -105, -211 )
+
+[node name="EnemyStatus" type="VBoxContainer" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 12 )
+
+[node name="AttackLabel" type="Label" parent="UI/EnemyStatus"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Wave:"
 
 [connection signal="timeout" from="enemies/Enemy1Timer" to="enemies" method="_on_Enemy1Timer_timeout"]
 [connection signal="area_shape_entered" from="pentagram/hit_area" to="enemies" method="_on_hit_area_area_shape_entered"]
