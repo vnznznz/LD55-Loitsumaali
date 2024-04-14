@@ -16,7 +16,7 @@ var health_bar:TextureProgress
 var attack_idx = 0
 var wave_idx = 0
 
-var attacks = [
+var attacks = [	
 	[
 		{
 			"total": 5,
@@ -96,6 +96,8 @@ var current_enemies_left = 0
 
 var prepare_time_left = 0
 
+onready var assault_label = $AssaultLabel
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	target_pos =  get_node(target).global_position
@@ -147,9 +149,15 @@ func _process(delta):
 			if wave_idx >= len(attacks[attack_idx]):
 				attack_idx += 1
 				wave_idx = 0
-			if attack_idx >= len(attacks):
-				Globals.game.set_victory()
-				return
+				if attack_idx >= len(attacks):
+					Globals.game.set_victory()
+					return
+				else:
+					assault_label.visible = true
+					assault_label.text = "Assault %s defended" % [attack_idx]
+					var tween = get_tree().create_tween()
+					tween.tween_callback(assault_label, "set_visible", [false]).set_delay(3)
+					
 			current_state = STATE_PREPARING
 			prepare_time_left = attacks[attack_idx][wave_idx].get("prepare", 0)
 	elif current_state == STATE_PREPARING:

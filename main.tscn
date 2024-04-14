@@ -52,6 +52,16 @@ curve = SubResource( 1 )
 [node name="Enemy1Timer" type="Timer" parent="enemies"]
 wait_time = 2.0
 
+[node name="AssaultLabel" type="Label" parent="enemies"]
+visible = false
+margin_left = 87.0
+margin_top = 122.0
+margin_right = 219.0
+margin_bottom = 136.0
+rect_scale = Vector2( 1.5, 1.5 )
+text = "Assault 1 completed"
+align = 1
+
 [node name="glyphs" type="Node2D" parent="."]
 visible = false
 position = Vector2( 31, 68 )
