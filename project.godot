@@ -38,7 +38,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="ld55_gd3"
+config/name="ld55_loitsumaali"
 run/main_scene="res://game.tscn"
 config/icon="res://icon.png"
 
