@@ -112,19 +112,18 @@ func set_book():
 	menu.visible = true
 	book.visible = true
 
-func _input(event:InputEvent):
+func _unhandled_input(event):
 	
 	if event.is_action_released("interact"):
 		#if state == STATE_START:
 		#	set_book()
 		#	return
-		
-		if state != STATE_PLAYING:
-			if state == STATE_BOOK:
-				continue_playing()
-			else:
-				set_playing()
 	
+		if state == STATE_BOOK:
+			continue_playing()
+		else:
+			set_playing()
+
 	
 
 
