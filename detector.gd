@@ -64,8 +64,8 @@ func select_glyph(user_points):
 	for glyph_type in glyph_points.keys():
 		var target_points = glyph_points[glyph_type]
 		var target_node = glyph_nodes[glyph_type]
-		glyph_type_to_similarity[glyph_type] = are_points_similar(target_points, user_points.duplicate(), 16, glyph_type, target_node.missable_points)
-	var similarity_cutoff = 0.6
+		glyph_type_to_similarity[glyph_type] = are_points_similar(target_points, user_points.duplicate(), 12, glyph_type, target_node.missable_points)
+	var similarity_cutoff = 0.55
 	var highest_similarity = similarity_cutoff
 	var max_candidates = 2
 	var candidates_count = 0

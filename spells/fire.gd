@@ -8,7 +8,7 @@ var direction = Vector2.ZERO
 var speed = 125
 
 var do_charge = true
-var charge_time = 1.5
+var charge_time = 2
 var color = Color.red
 
 var damage_timers = {}
