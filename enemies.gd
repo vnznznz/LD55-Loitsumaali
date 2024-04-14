@@ -23,6 +23,7 @@ var attacks = [
 		{
 			"total": 5,
 			"shield": 0,			
+			"speed_shield": 0,
 			"deploy": 0.5,			
 		},
 		{
