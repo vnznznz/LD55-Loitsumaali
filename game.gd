@@ -22,6 +22,8 @@ onready var defeat = $menu/Defeat
 onready var banished = $menu/banished
 onready var start = $menu/Start
 onready var book = $menu/Spellbook
+onready var btnAgain = $menu/btnAgain
+onready var btnEndless = $menu/btnEndless
 
 var main_scene = preload("res://main.tscn")
 
@@ -42,12 +44,17 @@ func set_start():
 	for child in menu.get_children():
 		child.visible = false
 	
-	menu.visible = true
+	menu.visible = true	
 	start.visible = true
+	btnAgain.visible = true
+	btnAgain.text = "start"
+	btnEndless.visible = true
 	get_tree().paused = true
 	
 func set_playing():
 	Globals.banished_enemies = 0
+	Globals.endless_mode = false
+	
 	state = STATE_PLAYING
 	main.queue_free()
 	main = main_scene.instance()
@@ -57,6 +64,11 @@ func set_playing():
 	start.visible = false
 	
 	get_tree().paused = false
+
+func set_playing_endless():
+	set_playing()
+	Globals.endless_mode = true
+	
 
 func continue_playing():
 	state = STATE_PLAYING
@@ -71,6 +83,9 @@ func set_victory():
 	
 	menu.visible = true
 	banished.visible = true
+	btnAgain.visible = true
+	btnAgain.text = "again"
+	btnEndless.visible = true
 	banished.text = "Enemies banished: %s" %[Globals.banished_enemies]
 	victory.visible = true
 
@@ -81,6 +96,9 @@ func set_defeat():
 		child.visible = false
 	
 	menu.visible = true
+	btnAgain.visible = true
+	btnAgain.text = "again"
+	btnEndless.visible = true
 	banished.visible = true
 	banished.text = "Enemies banished: %s" %[Globals.banished_enemies]
 	defeat.visible = true
@@ -95,10 +113,11 @@ func set_book():
 	book.visible = true
 
 func _input(event:InputEvent):
+	
 	if event.is_action_released("interact"):
-		if state == STATE_START:
-			set_book()
-			return
+		#if state == STATE_START:
+		#	set_book()
+		#	return
 		
 		if state != STATE_PLAYING:
 			if state == STATE_BOOK:
@@ -107,3 +126,17 @@ func _input(event:InputEvent):
 				set_playing()
 	
 	
+
+
+func _on_btnAgain_pressed():
+	if state == STATE_START:
+		set_book()
+	else:
+		set_playing()
+
+
+func _on_btnEndless_pressed():
+	if state == STATE_START:
+		set_book()
+	else:
+		set_playing_endless()

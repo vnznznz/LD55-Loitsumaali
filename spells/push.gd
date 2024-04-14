@@ -23,7 +23,6 @@ func _process(delta):
 func _physics_process(delta):
 	for other_area in area.get_overlapping_areas():
 		if other_area.get_parent().has_method("is_enemy") and other_area.get_parent().is_enemy():
-			other_area.get_parent().global_position += Vector2.UP * 100 * delta
-			other_area.get_parent().remove_shield()
+			other_area.get_parent().push(delta) 			
 	
 	self.global_position += Vector2.UP * speed * delta

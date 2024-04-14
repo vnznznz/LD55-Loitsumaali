@@ -21,7 +21,8 @@ func _ready():
 	if target_node:		
 		look_at(selected_enemy.global_position)
 		direction = (selected_enemy.global_position - global_position).normalized()
-	
+	else:
+		direction = Vector2.UP
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,6 +30,7 @@ func _process(delta):
 	if is_instance_valid(target_node):		
 		look_at(target_node.global_position)
 		direction = (target_node.global_position - global_position).normalized()
+	
 		
 	self.position += direction * speed * delta
 

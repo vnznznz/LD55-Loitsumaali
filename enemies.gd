@@ -16,11 +16,13 @@ var health_bar:TextureProgress
 var attack_idx = 0
 var wave_idx = 0
 
+var difficulty_modifier = 0
+
 var attacks = [	
 	[
 		{
 			"total": 5,
-			"shield": 0,
+			"shield": 0,			
 			"deploy": 0.5,			
 		},
 		{
@@ -49,37 +51,42 @@ var attacks = [
 	],
 	[
 		{
+			"total": 10,
+			"shield": 0.5,
+			"speed_shield": 1,
+			"deploy": 10,
+		},
+		{
 			"total": 20,
 			"shield": 0,
+			"speed_shield": 0.5,
 			"deploy": 10,			
 		},
 		{
 			"total": 20,
 			"shield": 0.5,
+			"speed_shield": 0.1,
 			"deploy": 5,
 			"prepare": 2,
-		},
-		{
-			"total": 10,
-			"shield": 1,
-			"deploy": 0.1,
-			"prepare": 0,
-		},
+		},		
 		{
 			"total": 15,
 			"shield": 1,
+			"speed_shield": 0.3,
 			"deploy": 0.1,
 			"prepare": 0,
 		},
 		{
 			"total": 20,
 			"shield": 1,
+			"speed_shield": 0.4,
 			"deploy": 0.1,
 			"prepare": 0.5,
 		},
 		{
 			"total": 100,
 			"shield": 0.3,
+			"speed_shield": 0.2,
 			"deploy": 10,
 			"prepare": 4
 		},
@@ -120,14 +127,16 @@ func spawn():
 	enemies.append(enemy)
 	
 	yield(get_tree(), "idle_frame")
-	var chance = attacks[attack_idx][wave_idx]["shield"] 
-	var roll = randf()
-	var shield_visible =  chance >  (1 - roll)
-	enemy.shield.visible = shield_visible
+
+	enemy.shield.visible =  attacks[attack_idx][wave_idx]["shield"] >  (1 - randf())
+	enemy.speed_shield.visible =  attacks[attack_idx][wave_idx].get("speed_shield", 0) >  (1 - randf())
+
 
 func setup_wave():
 	current_state = STATE_DEPLOYING
-	current_enemies_left = attacks[attack_idx][wave_idx]["total"]
+	current_enemies_left = attacks[attack_idx][wave_idx]["total"] 
+	current_enemies_left *= 1 + (difficulty_modifier * 0.5)
+	
 	$Enemy1Timer.wait_time = attacks[attack_idx][wave_idx]["deploy"] / float(current_enemies_left)
 	$Enemy1Timer.start()
 	
@@ -150,7 +159,15 @@ func _process(delta):
 				attack_idx += 1
 				wave_idx = 0
 				if attack_idx >= len(attacks):
-					Globals.game.set_victory()
+					if Globals.endless_mode:
+						attack_idx = 0						
+						assault_label.visible = true
+						assault_label.text = "Loop %s completed" % [difficulty_modifier]
+						var tween = get_tree().create_tween()
+						tween.tween_callback(assault_label, "set_visible", [false]).set_delay(3)
+						difficulty_modifier += 1
+					else:
+						Globals.game.set_victory()
 					return
 				else:
 					assault_label.visible = true

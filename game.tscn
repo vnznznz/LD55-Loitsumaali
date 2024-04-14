@@ -19,13 +19,11 @@ z_index = 10
 z_as_relative = false
 
 [node name="Victory" parent="menu" instance=ExtResource( 1 )]
-visible = false
 
 [node name="Defeat" parent="menu" instance=ExtResource( 2 )]
 visible = false
 
 [node name="banished" type="Label" parent="menu"]
-visible = false
 margin_left = 37.0
 margin_top = 285.0
 margin_right = 170.0
@@ -34,12 +32,31 @@ rect_scale = Vector2( 1.5, 1.5 )
 text = "Enemies banished: 143"
 
 [node name="Start" type="Sprite" parent="menu"]
-visible = false
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
 centered = false
 
 [node name="Spellbook" type="Sprite" parent="menu"]
+visible = false
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 6 )
 centered = false
+
+[node name="btnAgain" type="Button" parent="menu"]
+margin_left = 95.0
+margin_top = 354.0
+margin_right = 140.0
+margin_bottom = 374.0
+rect_scale = Vector2( 2, 2 )
+text = "again"
+
+[node name="btnEndless" type="Button" parent="menu"]
+margin_left = 97.0
+margin_top = 420.0
+margin_right = 200.0
+margin_bottom = 440.0
+rect_scale = Vector2( 2, 2 )
+text = "endless mode"
+
+[connection signal="pressed" from="menu/btnAgain" to="." method="_on_btnAgain_pressed"]
+[connection signal="pressed" from="menu/btnEndless" to="." method="_on_btnEndless_pressed"]
