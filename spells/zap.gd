@@ -10,6 +10,10 @@ var current_shots = 0
 var direction = Vector2.ZERO
 var speed = 75
 
+var do_charge = true
+var charge_time = 1
+var color = Color.aqua
+
 func _ready():
 	pass
 	

@@ -20,7 +20,7 @@ var spells = {
 }
 
 var current_glyphs = []
-
+var spell_instance:Node
 
 var current_spell = ""
 # Called when the node enters the scene tree for the first time.
@@ -61,9 +61,16 @@ func start_casting(spell):
 	print("start casting:", spell)
 	invocation_bar.text = "casting: " + invocation_bar.text
 	current_spell = spell
-	Globals.is_casting = true
-	cast_particles_direction.restart()
-	$CastChargeTimer.start()
+	spell_instance = spells[spell].instance()
+	if spell_instance.do_charge:
+		Globals.is_casting = true
+		$CastChargeTimer.wait_time = spell_instance.charge_time
+		cast_particles_direction.lifetime = spell_instance.charge_time		
+		cast_particles_direction.restart()
+		cast_particles_direction.modulate = spell_instance.color
+		$CastChargeTimer.start()
+	else:
+		cast_spell(spell)
 	
 func cast_spell(spell):
 	Globals.is_casting = false 
@@ -71,8 +78,9 @@ func cast_spell(spell):
 	current_glyphs.clear()
 	
 	print("casting:", spell)
+	cast_particles.modulate = spell_instance.color
 	cast_particles.restart()
-	var spell_instance =  spells[spell].instance()
+	
 	spell_instance.direction =  Vector2(get_local_mouse_position().x, -50).normalized()
 	add_child(spell_instance)
 	update()
@@ -83,8 +91,8 @@ func _process(delta):
 		update()
 
 func _draw():
-	if Globals.is_casting:
-		draw_line(Vector2.ZERO, Vector2(get_local_mouse_position().x, -50).normalized() * 200, Color.whitesmoke, 2, true)
+	if Globals.is_casting and is_instance_valid(spell_instance):
+		draw_line(Vector2.ZERO, Vector2(get_local_mouse_position().x, -50).normalized() * 200, spell_instance.color, 4, true)
 
 
 func _on_CastChargeTimer_timeout():
