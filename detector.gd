@@ -28,23 +28,29 @@ func are_points_similar(points_a, points_b, threshold, glyph_type, missable_poin
 	var threshold_squared = threshold * threshold
 	var missed_points = 0
 	var similarity = 0
+	var b_offset = 0
 	for point_a in points_a:
 		var found = false
-		for b_idx in range(points_b.size()):
+		var lowest_distance = threshold_squared
+		var idx_found = 0
+		for b_idx in range(b_offset, points_b.size()):
 			var point_b = points_b[b_idx]
 			var distance_squared = point_a.distance_squared_to(point_b)
 			if distance_squared < threshold_squared:
-				similarity += 1 - (distance_squared / threshold_squared)
+				if distance_squared < lowest_distance:
+					lowest_distance = distance_squared
+					idx_found = b_idx		
 				found = true
-				if point_a in point_to_glyphs:
-					point_to_glyphs[point_a].append(glyph_type)
-				else:
-					point_to_glyphs[point_a] = [glyph_type]
-				break
 		if not found:
 			missed_points += 1
 			if missed_points > missable_points:
 				return 0
+		similarity += 1 - (lowest_distance / threshold_squared)
+		#points_b.remove(idx_found)				
+		if point_a in point_to_glyphs:
+			point_to_glyphs[point_a].append(glyph_type)
+		else:
+			point_to_glyphs[point_a] = [glyph_type]
 	if missed_points == points_a.size():
 		return 0
 	return similarity / points_a.size()
@@ -59,7 +65,7 @@ func select_glyph(user_points):
 		var target_points = glyph_points[glyph_type]
 		var target_node = glyph_nodes[glyph_type]
 		glyph_type_to_similarity[glyph_type] = are_points_similar(target_points, user_points.duplicate(), 16, glyph_type, target_node.missable_points)
-	var similarity_cutoff = 0.35
+	var similarity_cutoff = 0.6
 	var highest_similarity = similarity_cutoff
 	var max_candidates = 2
 	var candidates_count = 0
