@@ -121,8 +121,6 @@ func _unhandled_input(event):
 	
 		if state == STATE_BOOK:
 			continue_playing()
-		else:
-			set_playing()
 
 	
 
