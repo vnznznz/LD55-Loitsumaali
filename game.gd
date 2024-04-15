@@ -133,7 +133,4 @@ func _on_btnAgain_pressed():
 
 
 func _on_btnEndless_pressed():
-	if state == STATE_START:
-		set_book()
-	else:
-		set_playing_endless()
+	set_playing_endless()
