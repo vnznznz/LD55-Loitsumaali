@@ -54,6 +54,7 @@ func set_start():
 func set_playing():
 	Globals.banished_enemies = 0
 	Globals.endless_mode = false
+	Globals.is_casting = false
 	
 	state = STATE_PLAYING
 	main.queue_free()
